@@ -1,6 +1,14 @@
-results
+bib
+books
 code
 iono_simulator
-wbmod_*
+library
+Mireia
+models
 papers
+pla_recerca
+results
+SIMIONO
 tesis
+wbmod_reader
+wbmod_study
