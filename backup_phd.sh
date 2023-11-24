@@ -41,9 +41,9 @@ fi
 
 # Lanza rsync
 if [ "$dev" == "1" ]; then
-  rsync -azhrRe ssh --progress --update --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='*.mat' --exclude='.git' /proyectos/phd/ cmolina@raspi:/home/data/backups/phd
+  rsync -azhrRe ssh --progress --update --stats --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='.git' /proyectos/phd/ cmolina@raspi:/home/data/backups/phd
 elif [ "$dev" == "2" ]; then
-  rsync -azhrRe ssh --progress --update --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='*.mat' --exclude='.git' /proyectos/phd/ /media/$USER/WD_CMOLINA/phd
+  rsync -azhrRe ssh --progress --update --stats --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='.git' /proyectos/phd/ /media/$USER/WD_CMOLINA/phd
 else
   echo "No se hace nada"
   exit 1
