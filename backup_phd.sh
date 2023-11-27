@@ -41,9 +41,16 @@ fi
 
 # Lanza rsync
 if [ "$dev" == "1" ]; then
+  echo "Enviando a Raspi"
   rsync -azhrRe ssh --progress --update --stats --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='.git' /proyectos/phd/ cmolina@raspi:/home/data/backups/phd
+  echo "Recibiendo desde Raspi"
+  rsync -azhrRe ssh --progress --update --stats --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='.git' cmolina@raspi:/home/data/backups/phd /proyectos/phd/
+
 elif [ "$dev" == "2" ]; then
+  echo "Enviando a HDD"
   rsync -azhrRe ssh --progress --update --stats --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='.git' /proyectos/phd/ /media/$USER/WD_CMOLINA/phd
+  echo "Recibiendo desde HDD"
+  rsync -azhrRe ssh --progress --update --stats --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='.git' /media/$USER/WD_CMOLINA/phd /proyectos/phd/
 else
   echo "No se hace nada"
   exit 1
