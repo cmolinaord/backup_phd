@@ -39,18 +39,22 @@ if [ "$dev" != "1" ] && [ "$dev" != "2" ] && [ "$dev" != "x" ]; then
   exit 1
 fi
 
+LIST="/proyectos/scripts/backup_phd/backup_list.txt"
+OPTS="-azhrRe ssh --progress --update --stats --files-from=$LIST"
+EXCLUDES="{'*.git','*.nc'}" # Not working
+
 # Lanza rsync
 if [ "$dev" == "1" ]; then
   echo "Enviando a Raspi"
-  rsync -azhrRe ssh --progress --update --stats --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='.git' /proyectos/phd/ cmolina@raspi:/home/data/backups/phd
+  rsync -n $OPTS --exclude={'*.git','*.nc'} /proyectos/phd/ cmolina@raspi:/home/data/backups/phd
   echo "Recibiendo desde Raspi"
-  rsync -azhrRe ssh --progress --update --stats --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='.git' cmolina@raspi:/home/data/backups/phd /proyectos/phd/
+  rsync -n $OPTS --exclude={'*.git','*.nc'} cmolina@raspi:/home/data/backups/phd /proyectos/phd/
 
 elif [ "$dev" == "2" ]; then
   echo "Enviando a HDD"
-  rsync -azhrRe ssh --progress --update --stats --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='.git' /proyectos/phd/ /media/$USER/WD_CMOLINA/phd
+  rsync $OPTS --exclude={'*.git','*.nc'} /proyectos/phd/ /media/$USER/WD_CMOLINA/phd
   echo "Recibiendo desde HDD"
-  rsync -azhrRe ssh --progress --update --stats --files-from=/proyectos/scripts/backup_phd/backup_list.txt --exclude='.git' /media/$USER/WD_CMOLINA/phd /proyectos/phd/
+  rsync $OPTS --exclude={'*.git','*.nc'} /media/$USER/WD_CMOLINA/phd /proyectos/phd/
 else
   echo "No se hace nada"
   exit 1
